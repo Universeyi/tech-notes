@@ -9,4 +9,4 @@ term-frequency and inverted document frequency
 具体来说对于一篇文章，统计文中单词universe的数量，方法则是生成’key-value’对 — (TERM\_i\_,1) （此为MAP操作），然后累加得到相同’TERM\_i\_’的总数（此为reduce操作），对文章长度度归一化后得到词频(term frequency)。DF亦是这个原理
 
 ### Page-rank with Spark
-对于一个迭代的数值计算过程，page-rank算法将分布式的多源计算采用spark类型的平台并行运行。迭代过程中，variable in memory助力迭代速率(是spark的一个特性)。成为一个业界实践典范。
+对于一个迭代的数值计算过程，page-rank算法将分布式的多源计算采用spark类型的平台并行运行。迭代过程中，spark的特性 in-memory caching of data助力迭代速率。成为一个业界实践典范。
