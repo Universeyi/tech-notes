@@ -18,4 +18,33 @@
 	missing = missing[missing>0]
 	missing.sort_values(inPlace=True)
 	missing.plot.bar()
-### 拟合量化数据到
+### 为类别类(categorical data) 做方差分析，用以反映他们对目标变量的重要性
+	def anova(frame):
+	    anv = pd.DataFrame()
+	    anv['feature'] = qualitative
+	    pvals = []
+	    for c in qualitative:
+	        samples = []
+	        for cls in frame[c].unique():
+	            s = frame[frame[c] == cls]['SalePrice'].values #此处SalePrice可以改为不同的目标值
+	            samples.append(s)
+	        pval = stats.f_oneway(*samples)[1]
+	        pvals.append(pval)
+	    anv['pval'] = pvals
+	    return anv.sort_values('pval')
+	
+	a = anova(train)
+	a['disparity'] = np.log(1./a['pval'].values)
+	sns.barplot(data=a, x='feature', y='disparity')
+	x=plt.xticks(rotation=90)
+### Spearman Correlation 方法计算等级相关性
+	def spearman(frame, features):
+	    spr = pd.DataFrame()
+	    spr['feature'] = features
+	    spr['spearman'] = [frame[f].corr(frame['SalePrice'], 'spearman') for f in features]
+	    spr = spr.sort_values('spearman')
+	    plt.figure(figsize=(6, 0.25*len(features)))
+	    sns.barplot(data=spr, y='feature', x='spearman', orient='h')
+	
+	features = quantitative + qual_encoded
+	spearman(train, features)
