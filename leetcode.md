@@ -1,4 +1,4 @@
-#leetcode notes
+# leetcode notes
 ### 695 Max Area of island
 ```python
   class Solution(object):
@@ -22,5 +22,5 @@
                     
         return res
 ```
-However, it won't pass the oj system as it reach the max recursion depth
+However, it won't pass the oj system as it reaches the max recursion depth. Java version of brute force recoursion can pass while python cannot.
     
