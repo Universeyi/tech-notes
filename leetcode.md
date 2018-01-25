@@ -63,3 +63,22 @@ class Solution(object):
             
         return res
 ```
+### 717. 1-bit and 2-bit Characters
+This problem is emmmmmmm. "Paper tiger" will be the best word to describe it. 
+```python
+class Solution(object):
+    def isOneBitCharacter(self, bits):
+        """
+        :type bits: List[int]
+        :rtype: bool
+        """
+        N = len(bits)
+        i=0
+        while(i<N-1):
+            if(bits[i]==0):
+                i = i+1
+            else:
+                i = i+2
+        return i==N-1
+```
+找规律很重要
