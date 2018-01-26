@@ -82,3 +82,57 @@ class Solution(object):
         return i==N-1
 ```
 找规律很重要
+### 122. Best Time to Buy and Sell Stock II
+My solution:
+1. Greedy
+2. Sell at highest and buy at lowest.
+```python
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        buy=0
+        sell=1
+        N = len(prices)
+        if(N==0):
+            return 0
+        if(N==1):
+            return 0
+        profit = 0
+        max_price_now = 0
+        min_price_now = 0
+        while(buy< N and sell<N ):
+            max_price_now = prices[buy]
+            while(prices[sell] >= max_price_now):
+                max_price_now = prices[sell]
+                sell = sell + 1
+                if sell>N-1 :
+                    profit  = profit + prices[sell-1]-prices[buy]
+                    return profit
+                
+            profit  = profit + prices[sell-1]-prices[buy]
+            min_price_now = prices[sell-1]
+            
+            while(prices[sell] <=  min_price_now):
+                min_price_now = prices[sell]
+                sell = sell +1
+                if sell>N-1:
+                    return profit
+            buy = sell - 1
+        return profit
+```
+Other possible solution -- Keep on adding the profit obtained from every consecutive transaction.
+```java
+class Solution {
+    public int maxProfit(int[] prices) {
+        int maxprofit = 0;
+        for (int i = 1; i < prices.length; i++) {
+            if (prices[i] > prices[i - 1])
+                maxprofit += prices[i] - prices[i - 1];
+        }
+        return maxprofit;
+    }
+}
+```
