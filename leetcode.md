@@ -188,3 +188,9 @@ class Solution(object):
 
         return ans
 ```
+#### 小总结，数字group类
+考虑使用到
+1. `dict`
+2. `dict.get(key)`
+3. 另开一个`count` dict 来记录出现的频率
+4. `left most`与`right most`更新策略的问题
