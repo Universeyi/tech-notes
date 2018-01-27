@@ -136,3 +136,55 @@ class Solution {
     }
 }
 ```
+### 697. Degree of an Array
+这道题自己的方法po费苦工，思路如下：
+1. 利用count函数统计数组中各元素出现的个数，并从大到小排序。
+2. 分析出现最多的元素（一个或者多个），返回他们的最短子数组长度。
+3. 最短子数组长度的原理是找第一个出现，最后一个出现的序号，然后做减。
+4. 通过了一半的测试用例，说明其正确性可以得到保证。然而悲剧的是，超时了。
+Code is attached below:
+```python
+class Solution:
+    def findShortestSubArray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        count_info = [[i,nums.count(i)] for i in nums]
+        pair_peak = max(count_info,key= lambda x:x[1])
+        pair_set = [ a for a,b in count_info if b==pair_peak[1]]
+        def small_lengh(num):
+            l = 0
+            r = len(nums)-1
+            while(True):
+                if(nums[l]!=num):
+                    l = l +1
+                else:
+                    break;
+            while(True):
+                if(nums[r]!=num):
+                    r = r -1
+                else:
+                    break;
+            return r-l+1
+        return min(list(map(small_lengh,pair_set)))
+```
+参考答案的原理和我相似，在数据结构的处理上比我更加巧妙。
+譬如，对于找到`left most`和`right most`和`count`这三件事情，采用了dict数据结构，只用了一个循环便搞定（当然，`count()`内部可不是常数时间的运算) 代码如下
+```python
+class Solution(object):
+    def findShortestSubArray(self, nums):
+        left, right, count = {}, {}, {}
+        for i, x in enumerate(nums):
+            if x not in left: left[x] = i #只在首次更新
+            right[x] = i #重复更新，以满足“最右边”的要求
+            count[x] = count.get(x, 0) + 1 #另存一个数组来相加
+
+        ans = len(nums)
+        degree = max(count.values())
+        for x in count:
+            if count[x] == degree:
+                ans = min(ans, right[x] - left[x] + 1) #考虑多个候选人的情况，求最短距离
+
+        return ans
+```
