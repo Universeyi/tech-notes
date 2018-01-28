@@ -194,3 +194,37 @@ class Solution(object):
 2. `dict.get(key)`
 3. 另开一个`count` dict 来记录出现的频率
 4. `left most`与`right most`更新策略的问题
+### 217. Contains Duplicate
+这道题我大材小用了，设置了一个字典专门来计数，最后统计最大的个数是否大于2，这个是没有必要的。更高效的做法是，只需判断0，1（即存在与否）。现附代码余下供参考。但也有值得肯定的地方，譬如熟练掌握dict方法😆
+My submission
+```python
+class Solution(object):
+    def containsDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        if(len(nums)==0 or len(nums)==1):
+            return False
+        stat = {}
+        for i in nums:
+            stat[i] = stat.get(i,0) + 1
+        return max(stat.values())>=2
+```
+
+Sample submission
+```python
+class Solution(object):
+    def containsDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        s = set()
+        for n in nums:
+            if n in s:
+                return True
+            s.add(n)
+        return False
+```
+直接用数据结构`set()`方便快捷
