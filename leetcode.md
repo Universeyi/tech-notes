@@ -228,3 +228,28 @@ class Solution(object):
         return False
 ```
 直接用数据结构`set()`方便快捷
+### 39. Combination Sum 
+终于来啦，DFS三件套例题，带你轻松入坑。
+
+Sample java submission
+```java
+public List<List<Integer>> combinationSum(int[] nums, int target) {
+    List<List<Integer>> list = new ArrayList<>();
+    Arrays.sort(nums);
+    backtrack(list, new ArrayList<>(), nums, target, 0);
+    return list;
+}
+
+private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] nums, int remain, int start){
+    if(remain < 0) return;
+    else if(remain == 0) list.add(new ArrayList<>(tempList));
+    else{ 
+        for(int i = start; i < nums.length; i++){
+            tempList.add(nums[i]);
+            backtrack(list, tempList, nums, remain - nums[i], i); // not i + 1 because we can reuse same elements
+            tempList.remove(tempList.size() - 1);
+        }
+    }
+}
+```
+My Submission in python
