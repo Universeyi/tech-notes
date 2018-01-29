@@ -253,3 +253,35 @@ private void backtrack(List<List<Integer>> list, List<Integer> tempList, int [] 
 }
 ```
 My Submission in python
+```python
+class Solution:
+    
+    
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        Solution.res = []
+        candidates.sort()
+        self.conbination(Solution.res,[],target,candidates,0)
+        return Solution.res
+    
+    def conbination(self,rest,tempList,remain,candidate,start):
+            if remain<0:
+                return
+            elif remain==0:
+                Solution.res.append(tempList)
+            else :
+                for i in range(start,len(candidate)):
+                    #tempList.append(candidate[i])
+                    self.conbination(Solution.res,tempList+[candidate[i]],remain-candidate[i],candidate,i)
+                    #tempList.pop()
+```
+思路
+1. 递归搜索，回溯搜索
+额外收获
+* 在python class中递归，一定要考虑全局变量的选定，不然这种动态语言很危险。
+疑惑
+* 至今未明白，为何注释那两行不可用，难道py后台会自动并行for loop导致`tempList`变量公用，进程变化？
