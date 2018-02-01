@@ -289,3 +289,47 @@ class Solution:
 疑惑
 
 * 至今未明白，为何注释那两行不可用，难道py后台会自动并行for loop导致`tempList`变量公用，进程变化？
+
+### 508. Most Frequent Subtree Sum
+递归+字典计数+查找最大频率（有重复值）
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def findFrequentTreeSum(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        if root==None:
+            return []
+        
+        self.countDict = {}
+        self.countFrequency(root)
+        res = []
+        max_fre = 0
+        max_index = 0
+        for num in self.countDict:
+            if self.countDict[num]>max_fre:
+                max_fre = self.countDict[num]
+                max_index = num
+        res.append(max_index)
+        
+        for num in self.countDict:
+            if self.countDict[num]==max_fre and num!=max_index:
+                res.append(num)
+        return res
+        
+        
+    def countFrequency(self,root):
+        if root==None:
+            return 0
+        sum_val = root.val + self.countFrequency(root.right) + self.countFrequency(root.left)
+        self.countDict[sum_val] = self.countDict.get(sum_val,0) + 1
+        return sum_val
+```
