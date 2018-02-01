@@ -418,6 +418,73 @@ public class Solution {
 ```
 ### 特辑 树当中 BFS,DFS 代码组织思路
 1. BFS
+
 通常有一层循环（对应一个队列），用于增减队列，循环继续的条件是队列不为空
 2. DFS 
-通常没有循环，利用递归实现遍历，注意对递归函数的base condition精心设计
+
+通常没有循环，利用对子树递归实现遍历，注意对递归函数的base condition精心设计，一般函数的第一行为null判断
+### 653. Two Sum IV - Input is a BST
+1. 我的解法：
+
+第一层循环，利用DFS遍历每个节点，用`help()`函数在BST中寻找是否有匹配值，考虑到了元素重复使用的问题，进行二次检查。其中对BST的遍历时采用单侧DFS.
+#### 点评
+思路直接但是复杂度极高，超过了递归的限度，无法AC。
+#### code
+```python
+class Solution:
+    def findTarget(self, root, k):
+        """
+        :type root: TreeNode
+        :type k: int
+        :rtype: bool
+        """
+        
+        if self.help(k-root.val,root,k):
+            return True
+        elif root.left!=None:
+            return self.findTarget(root,k-root.left.val)
+        elif root.right!=None:
+            return self.findTarget(root,k-root.right.val)
+        else:
+            return False
+    
+    def help(self,remain,root,k):
+        if root==None :
+            return False
+        
+        if root.val==remain:
+            if root.val!=k-remain: 
+                return True
+            else:
+                return False
+        elif root.val<remain:
+            return self.help(remain,root.right,k)
+        elif root.val>remain:
+            return self.help(remain,root.left,k)
+        
+        return False
+```
+2. `set()` + `DFS` 实现
+
+在利用DFS遍历的时候，同时维护一个`set`判断有无前序匹配，无则加入当前元素，递归子树。
+```python
+class Solution(object):
+    def findTarget(self, root, k):
+        """
+        :type root: TreeNode
+        :type k: int
+        :rtype: bool
+        """
+        sett = []
+        return self.help(root,k,sett)
+    
+    def help(self,root,k,sset):
+        if root==None:
+            return False
+        if k-root.val in sset:
+            return True
+        
+        sset.append(root.val)
+        
+        return self.help(root.left,k,sset) or self.help(root.right,k,sset)
+```        
