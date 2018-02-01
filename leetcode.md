@@ -350,3 +350,69 @@ class Solution:
 ```
 1. 加入队列，返回最后的node值。
 2. BFS的顺序是从右至左。所以最后一个node值是最下最左
+### 637. Average of Levels in Binary Tree
+### 要点
+1. BFS
+2. 通过设置两个队列，来处理层间迭代的问题
+```python
+class Solution:
+    def averageOfLevels(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[float]
+        """
+        res=[]
+        que=[root]
+        while len(que)!=0:
+            temp = []
+            ssum=cout=0
+            while len(que)!=0:
+                node = que.pop(0)
+                ssum += node.val
+                cout +=1
+                if node.left!=None:
+                    temp.append(node.left)
+                if node.right!=None:
+                    temp.append(node.right)
+            que=temp
+            res.append(ssum/cout*1.0)
+        return res
+```
+#### 方法二
+DFS
+
+采用count[i] 数组表示第i层的节点的个数
+```java
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public List < Double > averageOfLevels(TreeNode root) {
+        List < Integer > count = new ArrayList < > ();
+        List < Double > res = new ArrayList < > ();
+        average(root, 0, res, count);
+        for (int i = 0; i < res.size(); i++)
+            res.set(i, res.get(i) / count.get(i));
+        return res;
+    }
+    public void average(TreeNode t, int i, List < Double > sum, List < Integer > count) {
+        if (t == null)
+            return;
+        if (i < sum.size()) {
+            sum.set(i, sum.get(i) + t.val);
+            count.set(i, count.get(i) + 1);
+        } else {
+            sum.add(1.0 * t.val);
+            count.add(1);
+        }
+        average(t.left, i + 1, sum, count);
+        average(t.right, i + 1, sum, count);
+    }
+}
+```
