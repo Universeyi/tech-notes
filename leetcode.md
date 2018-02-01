@@ -333,3 +333,20 @@ class Solution:
         self.countDict[sum_val] = self.countDict.get(sum_val,0) + 1
         return sum_val
 ```
+### 513. Find Bottom Left Tree Value
+#### 亮点
+BFS的py方法
+```python
+class Solution:
+    def findBottomLeftValue(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        que = [root]
+        for node in que:
+            que+=filter(None,[node.right,node.left])
+        return node.val
+```
+1. 加入队列，返回最后的node值。
+2. BFS的顺序是从右至左。所以最后一个node值是最下最左
