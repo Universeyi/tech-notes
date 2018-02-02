@@ -537,3 +537,48 @@ class Solution(object):
             active.insert(i, flower)
         return -1
 ```
+### 366. Find Leaves of Binary Tree
+Sample codes
+```java
+public class Solution {
+    public List<List<Integer>> findLeaves(TreeNode root) {
+        List<List<Integer>> res = new ArrayList<>();
+        height(root, res);
+        return res;
+    }
+    private int height(TreeNode node, List<List<Integer>> res){
+        if(null==node)  return -1;
+        int level = 1 + Math.max(height(node.left, res), height(node.right, res));
+        if(res.size()<level+1)  res.add(new ArrayList<>());
+        res.get(level).add(node.val);
+        return level;
+    }
+}
+```
+My submission
+```python
+class Solution(object):
+    def findLeaves(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        self.res = []
+        self.helper(root,self.res)
+        return self.res
+    def helper(self,root,res):
+        if root==None:
+            return -1
+        level = 1+ max(self.helper(root.left,self.res),self.helper(root.right,self.res))
+        
+        if level>len(res)-1:
+            self.res.append([root.val])
+        else:
+            self.res[level].append(root.val)
+        return level
+```
+新意
+
+1. DFS，层数（离叶子的距离，最小为零）计算。
+2.  用层数来区分返回结果的空间大小。
+3. DFS每层循环其实是Bottom Up操作，从叶子端的操作向上。
