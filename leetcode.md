@@ -487,4 +487,53 @@ class Solution(object):
         sset.append(root.val)
         
         return self.help(root.left,k,sset) or self.help(root.right,k,sset)
-```        
+```        
+### 683. K Empty Slots
+这题折腾了我90分钟。最后自己代码的成绩是 通过测试用例 25/61 ，剩余部分超时。基本思想为，滑动窗口找符合条件的解，并利用自定义函数进行条件判断。最后返回最近日期。
+```python
+class Solution:
+    def kEmptySlots(self, flowers, k):
+        """
+        :type flowers: List[int]
+        :type k: int
+        :rtype: int
+        """
+        N = len(flowers)
+        res = []
+        for i in range(0,N):
+            for j in range(1,N-i):
+                if(abs(flowers[j+i]-flowers[i])-1==k and self.help(flowers,k,flowers[j+i],flowers[i])):
+                    res.append(j+i+1)
+        if len(res)==0:
+            return -1
+        else:
+            return min(res)
+                        
+        
+    def help(self,flowers,k,loc1,loc2):
+        r = max(loc1,loc2)
+        l = min(loc1,loc2)
+        late = flowers.index(loc1)
+        count = 0
+        for n in range(l+1,r):
+            if flowers.index(n)>late:
+                count+=1
+        
+        if count==k:
+            return True
+        else:
+            return False
+```
+优秀样本解：
+```python
+class Solution(object):
+    def kEmptySlots(self, flowers, k):
+        active = []
+        for day, flower in enumerate(flowers, 1):
+            i = bisect.bisect(active, flower)
+            for neighbor in active[i-(i>0):i+1]:
+                if abs(neighbor - flower) - 1 == k:
+                    return day
+            active.insert(i, flower)
+        return -1
+```
