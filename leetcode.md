@@ -582,3 +582,35 @@ class Solution(object):
 1. DFS，层数（离叶子的距离，最小为零）计算。
 2.  用层数来区分返回结果的空间大小。
 3. DFS每层循环其实是Bottom Up操作，从叶子端的操作向上。
+### 582. Kill Process
+可以用树解决的问题，我们需要构建树，空间换时间。
+
+我的朴素想法--Time exceeded 
+```python
+class Solution:
+    def killProcess(self, pid, ppid, kill):
+        """
+        :type pid: List[int]
+        :type ppid: List[int]
+        :type kill: int
+        :rtype: List[int]
+        """
+        if len(pid)==1:
+            return pid
+        
+        res = []
+        que = [kill]
+        while len(que)!=0:
+            for kil in que:
+                cpid = [i for i,k in enumerate(ppid) if k==kil ]
+                cp = list(map(lambda x:pid[x],cpid))
+                res.append(que.pop(0))
+                que.extend(cp)
+                             
+        return res
+```
+New submission:
+
+1. 建立pid -> Node的映射 (1d list to (i,Node) dict)。
+2. 通过ppid构建Node之间的关系，形成树。
+3. 递归调用findAllChild方法，完成操作。
