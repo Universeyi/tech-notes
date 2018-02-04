@@ -614,3 +614,42 @@ New submission:
 1. 建立pid -> Node的映射 (1d list to (i,Node) dict)。
 2. 通过ppid构建Node之间的关系，形成树。
 3. 递归调用findAllChild方法，完成操作。
+```python
+class Solution:
+    class Node(object):
+        children = []
+        def __init__(self,val):
+            self.val =val
+            
+    def killProcess(self, pid, ppid, kill):
+        """
+        :type pid: List[int]
+        :type ppid: List[int]
+        :type kill: int
+        :rtype: List[int]
+        """
+        
+        pidDict = {} #val,node_with_val
+        self.res = [kill]
+        for j in pid:
+            pidDict[j]=self.Node(j) #j==val
+        
+        for i in range(len(ppid)):
+            if ppid[i]>0:
+                parent = ppid[i]
+                pidDict[parent].children.append(pidDict[pid[i]])
+                
+        self.findAllHaiZi(pidDict[kill],self.res)
+        
+        return self.res
+        
+    def findAllHaiZi(self,node,res):
+        if len(node.children)==0:
+            return
+        for child in node.children:
+            self.res.append(child.val)
+            self.findAllHaiZi(child,res)
+```
+可惜python递归限制次数比java少太多了，此算法效率低下，无法AC。
+
+考虑
