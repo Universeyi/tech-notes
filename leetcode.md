@@ -685,3 +685,27 @@ class Solution:
         
         return G[n]
 ```
+### 235. Lowest Common Ancestor of a Binary Search Tree
+思路，若要求有共同祖先，必定位于某根部节点的两个子树旁，或者所给两点本身就有父子关系。
+
+只对 节点值均大于根值，节点值均小于根值的情况进行迭代，迭代的方向利用BST的大小特性。
+
+如何保证是最下祖先呢？如果两个节点的`(root.val-p.val)*(root.val-q.val) >0`成立，那么他们一定位于节点的一侧子树中，那么它们一定有更下的共同祖先（一左一右，上式乘积为负数）或者自身构成父子关系（其中一个作差为零）。
+```python
+class Solution(object):
+    def lowestCommonAncestor(self, root, p, q):
+        """
+        :type root: TreeNode
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: TreeNode
+        """
+        while (root.val-p.val)*(root.val-q.val) >0:
+            root =  (root.left,root.right)[root.val<q.val] #元组判断法
+       
+        return root
+```
+
+小知识：
+1. 上文采用的元组判断法不推荐使用，因为元组会全部计算构建元组再做条件判断，然而经典的if-else条件判断顺序与之相反。
+2. 不过这样确实很酷
