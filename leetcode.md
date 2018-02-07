@@ -653,3 +653,35 @@ class Solution:
 可惜python递归限制次数比java少太多了，此算法效率低下，无法AC。
 
 考虑
+### 96. Unique Binary Search Trees
+这道题是一道数理推断题，核心思想如下：
+
+设`G(n)`为`n`节点可以构成的独特BST的总数(其中规定 `G(0)=G(1)=1`)，那么
+
+`G(n) = F(1,n) + ... + F(n,n)` 其中i代表根的位置，从1开始计数。因为节点不同，因此是不一样的树
+
+我们还发现：
+
+`F(i,n) = G(i-1) * G(n-i)` (i>=2) 左右两侧子树，笛卡尔积
+
+因此，`G(n)`可以表达成为
+
+`G(n) = G(0)* G(n) + G(1)*(n-1) + ... + G(n-1) * G(0)`
+
+因此，此题的代码解为
+```python
+class Solution:
+    def numTrees(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        G = [0]*(n+1)
+        G[0]=G[1]=1
+        
+        for i in range(2,n+1):
+            for j in range(1,n+1):
+                G[i] += G[j-1]*G[i-j]
+        
+        return G[n]
+```
