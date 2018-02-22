@@ -23,3 +23,12 @@ Serialization 是传送大体积对象所用的几类办法实现的几类方式
 RMI (Remote Method Invocation) 是实现分布式对象方法调用的java工具。本质是一层封装了socket的平台，并映射了global variable和local variable。对象需注册并设置代理人。
 
 Multicast  -\> Publish and Subscribe (high level Frame API)
+
+### Pthread 线程使用基本方法指南
+当发生以下情形之一时，线程就会结束：
+
+* 线程运行的函数return了，也就是线程的任务已经完成；
+* 线程调用了 pthread_exit 函数；
+* 其他线程调用 pthread_cancel 结束这个线程；
+* 进程调用 exec() or exit()，结束了；
+* main() 函数先结束了，而且 main() 自己没有调用 pthread_exit 来等所有线程完成任务.
