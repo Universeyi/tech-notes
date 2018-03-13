@@ -3,7 +3,7 @@
 ```python
   class Solution(object):
     def areaAroundThisPoint(self,grid,x,y):
-        if(x>-1 and y>-1 and x<len(grid) and y<len(grid[0])) and grid[x][y]: //update gird can be confirmed
+        if(x>-1 and y>-1 and x<len(grid) and y<len(grid[0])) and grid[x][y]: #update gird value should be 1 before start recursive adding
             grid[x][y]=0
             return 1+ self.areaAroundThisPoint(grid,x-1,y) + self.areaAroundThisPoint(grid,x,y-1) + self.areaAroundThisPoint(grid,x+1,y) + self.areaAroundThisPoint(grid,x,y+1)
         return 0
