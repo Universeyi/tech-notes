@@ -327,7 +327,7 @@ class Solution:
         """
         que = [root]
         for node in que:
-            que+=filter(None,[node.right,node.left])
+            que+=filter(None,[node.right,node.left]) #filter out the none value in children list, tricky use in python filter() function
         return node.val
 ```
 1. 加入队列，返回最后的node值。
