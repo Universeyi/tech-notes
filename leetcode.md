@@ -742,3 +742,26 @@ class Solution(object):
 第二种解法，单调栈，使用单调栈可以找到元素向左遍历第一个比他小的元素，也可以找到元素向左遍历第一个比他大的元素。单调栈的操作复杂度是O(n)。对于本题的时间复杂度亦是O(n^2)
 
 不知道为什么效率会提升~~
+### 547. Friend Circles
+```python
+class Solution:
+    def findCircleNum(self, M):
+        """
+        :type M: List[List[int]]
+        :rtype: int
+        """
+        visited = [0] *len(M)
+        cout = 0
+        for i in range(len(M)):
+            if visited[i]==0 :
+                self.dfs(i,M,visited)
+                cout +=1
+        return cout
+    
+    def dfs(self,i,M,visited):
+        for j in range(len(M)):
+            if M[i][j]==1 and visited[j]==0:
+                visited[j]=1
+                self.dfs(j,M,visited)
+```
+朋友圈，DFS。递归找朋友，深度优先。值得记忆理解的模范DFS代码。
