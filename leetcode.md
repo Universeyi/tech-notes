@@ -691,3 +691,27 @@ class Solution(object):
 小知识：
 1. 上文采用的元组判断法不推荐使用，因为元组会全部计算构建元组再做条件判断，然而经典的if-else条件判断顺序与之相反。
 2. 不过这样确实很酷
+### 650. 2 Keys Keyboard
+
+这道题最终把问题转化为`n`的素数分解(prime factorization)
+
+1. 所有的操作部分都可以分组为素数长度的解 CPCPP -> [CP] [CPP]
+2. 如果不是素数长度，可以再分，结果等价为素数长度的组
+3. 对于copy paste问题，我们发现素数组的长度正好对应"素数最小组操作“的长度。 CPP -> 三倍
+4. 因此这题转化为对给定的`n`的质数分解
+```python
+class Solution(object):
+    def minSteps(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        d=2
+        ans=0
+        while(n>1):
+            while n%d==0:
+                ans+=d
+                n/=d
+            d+=1
+        return ans
+```        
