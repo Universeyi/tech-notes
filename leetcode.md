@@ -715,3 +715,30 @@ class Solution(object):
             d+=1
         return ans
 ```        
+### 739. Daily Temperatures
+```python
+class Solution(object):
+    def dailyTemperatures(self, temperatures):
+        """
+        :type temperatures: List[int]
+        :rtype: List[int]
+        """
+        
+        sstack=[]
+        ans = [0]*len(temperatures)
+        for i in range(len(temperatures)):
+            while len(sstack)!=0 and temperatures[i]>temperatures[sstack[-1]]:
+                idx = sstack.pop()
+                ans[idx] = i-idx
+            sstack.append(i)
+        
+        return ans
+```
+
+这道题学到一个新概念－－“单调栈”。
+
+我的第一种解法，利用两次循环去遍历，找到第一个匹配的结果便写入ans然后break。用Python然后就超时了，2333。此题时间复杂度n^2。
+
+第二种解法，单调栈，使用单调栈可以找到元素向左遍历第一个比他小的元素，也可以找到元素向左遍历第一个比他大的元素。单调栈的操作复杂度是O(n)。对于本题的时间复杂度亦是O(n^2)
+
+不知道为什么效率会提升~~
