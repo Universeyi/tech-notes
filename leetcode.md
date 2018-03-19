@@ -814,3 +814,30 @@ class Solution:
         self.help(node.right,level+1,res)
         self.help(node.left,level+1,res)
 ```        
+### 107. Binary Tree Level Order Traversal II
+BFS 分层遍历模板,请按照这个来处理层间问题。
+```python
+class Solution:
+    def levelOrderBottom(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        if root==None:
+            return []
+        que = [root]
+        res = []
+        
+        while(len(que)!=0):
+            temp = []
+            N = len(que)
+            for i in range(N):
+                node = que.pop(0)
+                if node.left!=None:
+                    que.append(node.left)
+                if node.right!=None:
+                    que.append(node.right)
+                temp.append(node.val)
+            res.insert(0,temp)
+        return res
+```        
