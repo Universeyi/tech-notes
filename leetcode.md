@@ -819,8 +819,7 @@ class Solution:
             res.insert(0,temp)
         return res
 ```        
-### 
-101. Symmetric Tree
+### 101. Symmetric Tree
 
 Yes, it's one of the most interesting quesiton solved by a beautiful symmertic and recersive way.
 ```python
