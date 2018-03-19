@@ -819,3 +819,25 @@ class Solution:
             res.insert(0,temp)
         return res
 ```        
+### 
+101. Symmetric Tree
+
+Yes, it's one of the most interesting quesiton solved by a beautiful symmertic and recersive way.
+```python
+class Solution:
+    def isSymmetric(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        #the most exciting recersive problem I have ever seen
+        return root==None or self.help(root.left,root.right)
+    def help(self,left,right):
+        if left==None or right ==None:
+            return left==right
+        
+        if left.val!=right.val:
+            return False
+        
+        return self.help(left.left,right.right) and self.help(left.right,right.left)
+```        
