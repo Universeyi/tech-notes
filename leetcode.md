@@ -765,3 +765,52 @@ class Solution:
                 self.dfs(j,M,visited)
 ```
 朋友圈，DFS。递归找朋友，深度优先。值得记忆理解的模范DFS代码。
+### 199. Binary Tree Right Side View
+```python
+class Solution:
+    def rightSideView(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        if root == None:
+            return []
+        res = [root.val]
+        que =[root]
+        while(len(que)!=0):
+            temp = []
+            while(len(que)!=0):
+                node = que.pop()
+                if node.left!=None:
+                    temp.append(node.left)
+                if node.right!=None:
+                    temp.append(node.right)
+                if len(temp)!=0:
+                    res.append(temp[-1].val)
+            que = temp
+        return res
+```
+待解答
+
+参考答案，非常优秀的DFS，兼顾level，右侧优先。
+```python
+class Solution:
+    def rightSideView(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        if root ==None:
+            return []
+        
+        res = []
+        self.help(root,0,res)
+        return res
+    def help(self,node,level,res):
+        if node==None:
+            return
+        if level==len(res):
+            res.append(node.val)
+        self.help(node.right,level+1,res)
+        self.help(node.left,level+1,res)
+```        
