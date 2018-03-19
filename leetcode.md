@@ -336,30 +336,8 @@ class Solution:
 ### 要点
 1. BFS
 2. 通过设置两个队列，来处理层间迭代的问题
-```python
-class Solution:
-    def averageOfLevels(self, root):
-        """
-        :type root: TreeNode
-        :rtype: List[float]
-        """
-        res=[]
-        que=[root]
-        while len(que)!=0:
-            temp = []
-            ssum=cout=0
-            while len(que)!=0:
-                node = que.pop(0)
-                ssum += node.val
-                cout +=1
-                if node.left!=None:
-                    temp.append(node.left)
-                if node.right!=None:
-                    temp.append(node.right)
-            que=temp
-            res.append(ssum/cout*1.0)
-        return res
-```
+
+You can refer to standard BFS method used in 107 as it perfctly solved tree BFS problem and have a great machanism to sperate each layer. 
 #### 方法二
 DFS
 
