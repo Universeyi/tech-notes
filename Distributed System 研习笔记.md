@@ -32,3 +32,7 @@ Multicast  -\> Publish and Subscribe (high level Frame API)
 * 其他线程调用 pthread_cancel 结束这个线程；
 * 进程调用 exec() or exit()，结束了；
 * main() 函数先结束了，而且 main() 自己没有调用 pthread_exit 来等所有线程完成任务.
+## Spark related notes
+### 如何区分转化操作与行动操作
+1. 如果对于一个特定的函数是属于转化操作还是行动操作感到困惑，你可以看看它的返回值类型：转化操作返回的是 RDD，而行动操作返回的是其他的数据类型。
+2. 转化操作的惰性理解。
