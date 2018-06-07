@@ -840,3 +840,42 @@ class Solution:
         
         return self.help(left.left,right.right) and self.help(left.right,right.left)
 ```        
+### 338. Counting Bits
+The most straight forward way to solve this problem is to travel every number and counts its binary bins.
+```python
+res.append(bin(i).count("1"))
+```
+However, we may find out that, they have a patern as followed
+
+dp[0] = 0;
+
+dp[1] = dp[1-1] + 1;
+
+dp[2] = dp[2-2] + 1;
+
+dp[3] = dp[3-2] +1;
+
+dp[4] = dp[4-4] + 1;
+
+dp[5] = dp[5-4] + 1;
+
+dp[6] = dp[6-4] + 1;
+
+dp[7] = dp[7-4] + 1;
+
+dp[8] = dp[8-8] + 1;
+
+Therefore, we can build up a dynamic solving system and use the number we have previously calculated to save time.
+```java
+public int[] countBits(int num) {
+    int result[] = new int[num + 1];
+    int offset = 1;
+    for (int index = 1; index < num + 1; ++index){
+        if (offset * 2 == index){ //update offset when n is some power of 2.
+            offset *= 2;
+        }
+        result[index] = result[index - offset] + 1;
+    }
+    return result;
+}
+```
