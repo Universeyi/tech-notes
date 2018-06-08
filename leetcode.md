@@ -879,3 +879,24 @@ public int[] countBits(int num) {
     return result;
 }
 ```
+### 647. Palindromic Substrings
+**DP**每一个回文都是从中心开始向四周延展，回文字符串按照奇偶长度分为两种。因此第一层对字符串的遍历是回文中心点。第二层遍历式扩展回文判断，直到左右边界不满足相等。
+```python
+class Solution(object):
+    def countSubstrings(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        self.res = 0
+        for i in range(len(s)):
+            self.helper(s,i,i)
+            self.helper(s,i,i+1)
+            
+        return self.res
+    def helper(self,s,left,right):
+        while left>=0 and right<len(s) and s[left]==s[right]:
+            left=left-1
+            right=right+1
+            self.res = self.res + 1
+```
