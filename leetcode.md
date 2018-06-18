@@ -900,3 +900,24 @@ class Solution(object):
             right=right+1
             self.res = self.res + 1
 ```
+### 413. Arithmetic Slices
+找给定的数列中存在的等差数列
+
+原理如下，等差数列的最小长度为3，因此我们从位置2开始向前两格遍历，发现此为等差数列后curr变量增加1，同时将当前等差数列值累加到sum变量。如果不满足等差数列，则curr变量为0。
+```python
+class Solution(object):
+    def numberOfArithmeticSlices(self, A):
+        """
+        :type A: List[int]
+        :rtype: int
+        """
+        curr = 0
+        sum=0
+        for i in range(2,len(A)):
+            if A[i]-A[i-1]==A[i-1]-A[i-2]:
+                curr +=1 #例如在1,2,3数列的基础上，我们发现1,2,3,4也可以构成等差数列。相当于等差数列的构成又可以多了一种组合。那么我们将curr++。
+                sum +=curr #并将每一次由于i更新的的curr都累加到sum上。
+            else:
+                curr = 0
+        return sum
+```        
